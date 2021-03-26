@@ -56,7 +56,7 @@ overflow-y:auto;
 <form action="question.php" method="post">
 <div class="card scroll">
   <div class="card-header">
-    MCQ questions
+   Time left = 30 seconds
   </div>
   
   
@@ -134,7 +134,7 @@ if(isset($_POST['submit_test']))
       $question=$question_array[$i];
       $answer=$_POST[$qid];
       
-      $query="INSERT INTO responses(questions,qid,answer) VALUES ('$question','$qid','$answer')";
+      $query="INSERT INTO response(question,qid,answer) VALUES ('$question','$qid','$answer')";
       $output=mysqli_query($db,$query);
   
   header('Location: ../quiz/result.php');

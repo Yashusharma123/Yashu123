@@ -1,20 +1,9 @@
-<script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
 
-    var myModal = document.getElementById('myModal')
-var myInput = document.getElementById('myInput')
-
-myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
-
-
-</script>
 <?php
+session_start();
 include 'connection.php';
 if(isset($_SESSION['level']))
+
 {
     $level=$_SESSION['level'];
     $query="SELECT correct_answer FROM questions WHERE question_type='".$level."'";
@@ -22,24 +11,28 @@ if(isset($_SESSION['level']))
 
     while($row=mysqli_fetch_array($run)){
         $answer=$row['correct_answer'];
-       echo $_SESSION['$answer'];
+       $_SESSION['answer']=$answer;
+
+       
     }
 
-    // $query2="SELECT answer FROM responses";
-    // $run2=mysqli_query($db,$query2);
+    $query2="SELECT answer FROM response";
+    $run2=mysqli_query($db,$query2);
 
-    // while($row2=mysqli_fetch_array($run2))
-    // {
-    //     $answer_sub=$row['answer'];
-    //    echo $_SESSION['answer_sub'];
+    while($row2=mysqli_fetch_array($run2))
+    {
+        $answer_sub=$row2['answer'];
+       $_SESSION['answer_sub']=$answer_sub;
 
 
-    // }
+    }
 $counter=0;
 if($_SESSION['answer']==$_SESSION['answer_sub'])
 {
-    $counter=$counter+1;
-    echo $counter;
+    $counter=$counter+5;
+    
+    $_SESSION['counter']=$counter;
+
 }
 }
 ?>
@@ -68,7 +61,7 @@ result
   <div class="card-body">
     <h3 class="card-title">Here's your result</h3>
     <p class="card-text">Each question carries 1 marks</p>
-
+<h5>You scored &nbsp;<?php echo $_SESSION['counter']; ?> marks</h5>
 </div>
 </div>
 </div>
